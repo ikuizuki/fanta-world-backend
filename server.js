@@ -1,7 +1,9 @@
 const express = require("express");
-const app = express();
 const cors = require("cors");
 
+const app = express();
+
+/* CORS */
 app.use(
   cors({
     origin: "https://fanta-world-gamma.vercel.app",
@@ -10,15 +12,22 @@ app.use(
   }),
 );
 
-app.use(express.json()); // QUAN TRỌNG
+app.use(express.json());
 
-// test api
+/* lưu vị trí player */
+let playerPosition = { x: 0, y: 0 };
+
+/* test api */
 app.get("/api/test", (req, res) => {
   res.json({ message: "Hello from backend 👋" });
 });
-// lưu vị trí player (tạm thời)
-let playerPosition = { x: 0, y: 0 };
 
+/* lấy vị trí */
+app.get("/api/player/position", (req, res) => {
+  res.json(playerPosition);
+});
+
+/* lưu vị trí */
 app.post("/api/player/position", (req, res) => {
   const { x, y } = req.body;
 
@@ -26,19 +35,12 @@ app.post("/api/player/position", (req, res) => {
     return res.status(400).json({ error: "Invalid position" });
   }
 
-  playerPosition.x = x;
-  playerPosition.y = y;
-
+  playerPosition = { x, y };
   console.log("Player position:", playerPosition);
 
   res.json({ status: "ok" });
 });
-//trả về vị trí
-app.get("/api/player/position", (req, res) => {
-  res.json(playerPosition);
-});
 
-app.options("*", cors());
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log("Server running on port", PORT);
