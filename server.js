@@ -1,15 +1,14 @@
 const express = require("express");
 const app = express();
-const PORT = process.env.PORT || 3000;
 const cors = require("cors");
-
-app.use(express.json()); // QUAN TRỌNG
 
 app.use(
   cors({
     origin: "https://fanta-world-gamma.vercel.app",
   }),
 );
+
+app.use(express.json()); // QUAN TRỌNG
 
 // test api
 app.get("/api/test", (req, res) => {
@@ -37,6 +36,8 @@ app.post("/api/player/position", (req, res) => {
   res.json({ status: "ok" });
 });
 
+app.options("*", cors());
+const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log("Server running on port", PORT);
 });
