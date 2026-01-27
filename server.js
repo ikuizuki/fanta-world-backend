@@ -1,8 +1,15 @@
 const express = require("express");
 const app = express();
 const PORT = process.env.PORT || 3000;
+const cors = require("cors");
 
 app.use(express.json()); // QUAN TRỌNG
+
+app.use(
+  cors({
+    origin: "https://fanta-world-gamma.vercel.app",
+  }),
+);
 
 // test api
 app.get("/api/test", (req, res) => {
