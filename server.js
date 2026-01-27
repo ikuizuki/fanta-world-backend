@@ -5,6 +5,8 @@ const cors = require("cors");
 app.use(
   cors({
     origin: "https://fanta-world-gamma.vercel.app",
+    methods: ["GET", "POST", "OPTIONS"],
+    allowedHeaders: ["Content-Type"],
   }),
 );
 
@@ -13,10 +15,6 @@ app.use(express.json()); // QUAN TRỌNG
 // test api
 app.get("/api/test", (req, res) => {
   res.json({ message: "Hello from backend 👋" });
-});
-//trả về vị trí
-app.get("/api/player/position", (req, res) => {
-  res.json(playerPosition);
 });
 // lưu vị trí player (tạm thời)
 let playerPosition = { x: 0, y: 0 };
@@ -34,6 +32,10 @@ app.post("/api/player/position", (req, res) => {
   console.log("Player position:", playerPosition);
 
   res.json({ status: "ok" });
+});
+//trả về vị trí
+app.get("/api/player/position", (req, res) => {
+  res.json(playerPosition);
 });
 
 app.options("*", cors());
