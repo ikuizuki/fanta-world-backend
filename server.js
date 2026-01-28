@@ -14,9 +14,6 @@ app.use(
 
 app.use(express.json());
 
-/* lưu vị trí player */
-let playerPosition = { x: 0, y: 0 };
-
 /* test api */
 app.get("/api/test", (req, res) => {
   res.json({ message: "Hello from backend 👋" });
@@ -47,24 +44,6 @@ app.post("/api/player/:playerId", (req, res) => {
   }
   playerPosition = { x, y };
   players[playerId] = playerPosition;
-  console.log("Player position:", playerPosition);
-
-  res.json({ status: "ok" });
-});
-/* lấy vị trí */
-app.get("/api/player/position", (req, res) => {
-  res.json(playerPosition);
-});
-
-/* lưu vị trí */
-app.post("/api/player/position", (req, res) => {
-  const { x, y } = req.body;
-
-  if (typeof x !== "number" || typeof y !== "number") {
-    return res.status(400).json({ error: "Invalid position" });
-  }
-
-  playerPosition = { x, y };
   console.log("Player position:", playerPosition);
 
   res.json({ status: "ok" });
