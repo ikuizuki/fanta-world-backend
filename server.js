@@ -6,7 +6,7 @@ const app = express();
 /* CORS */
 app.use(
   cors({
-    origin: "https://fanta-world-gamma.vercel.app",
+    origin: "*",
     methods: ["GET", "POST", "OPTIONS"],
     allowedHeaders: ["Content-Type"],
   }),
